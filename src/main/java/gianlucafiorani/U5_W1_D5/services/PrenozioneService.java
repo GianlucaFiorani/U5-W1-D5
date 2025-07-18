@@ -17,14 +17,10 @@ public class PrenozioneService {
     }
 
     public void save(Prenotazione prenotazione) {
-        try {
-            if (prenotazioneDAO.isBooked(prenotazione.getPostazione().getId(), prenotazione.getUser().getId(), prenotazione.getDate()).isEmpty()) {
-                prenotazioneDAO.save(prenotazione);
-            } else {
-                throw new ExistingReservation();
-            }
-        } catch (NotFoundException e) {
+        if (prenotazioneDAO.isBooked(prenotazione.getDate(), prenotazione.getPostazione().getId()).isEmpty() && prenotazioneDAO.isUserAlreadyBooked(prenotazione.getUser().getId(), prenotazione.getDate()).isEmpty()) {
             prenotazioneDAO.save(prenotazione);
+        } else {
+            throw new ExistingReservation();
         }
     }
 

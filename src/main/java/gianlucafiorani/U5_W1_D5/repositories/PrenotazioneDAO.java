@@ -12,9 +12,9 @@ import java.util.UUID;
 @Repository
 public interface PrenotazioneDAO extends JpaRepository<Prenotazione, UUID> {
 
-    @Query("SELECT p FROM Prenotazione p WHERE p.date = :date")
-    List<Prenotazione> findByDate(LocalDate date);
+    @Query("SELECT p FROM Prenotazione p WHERE p.date = :date AND p.building = :building")
+    List<Prenotazione> isBooked(LocalDate date, UUID building);
 
-    @Query("SELECT p FROM Prenotazione p WHERE p.building = :building AND p.user = :user AND p.date = :date")
-    List<Prenotazione> isBooked(UUID building, UUID user, LocalDate date);
+    @Query("SELECT p FROM Prenotazione p WHERE  p.user = :user AND p.date = :date")
+    List<Prenotazione> isUserAlreadyBooked(UUID user, LocalDate date);
 }
