@@ -21,6 +21,5 @@ public class Postazione {
     private String description;
     private Type type;
     @ManyToOne
-    // @JoinColumn(name = "building_id")
     private Edificio building;
 }
